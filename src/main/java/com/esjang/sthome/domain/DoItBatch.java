@@ -26,7 +26,7 @@ public class DoItBatch {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int	id;
+	private Integer	id;
 	
 //	@Column(nullable = false, length = 10)
 	@ManyToOne(fetch = FetchType.EAGER)

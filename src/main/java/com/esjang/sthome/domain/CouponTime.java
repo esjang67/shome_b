@@ -16,6 +16,6 @@ public class CouponTime {
 	@Column(nullable = false, length = 10)
 	private String userid;
 	
-	private int totaltime;
+	private Integer totaltime;
 	
 }

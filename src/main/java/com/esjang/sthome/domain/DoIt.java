@@ -23,7 +23,7 @@ public class DoIt {
 
 	@Id			// 기본키 컬럼 설정
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int id;
+	private Integer id;
 	
 //	@Column(nullable = false, length = 10)
 	@ManyToOne(fetch = FetchType.EAGER)

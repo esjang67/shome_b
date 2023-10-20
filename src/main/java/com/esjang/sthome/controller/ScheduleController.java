@@ -1,5 +1,6 @@
 package com.esjang.sthome.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esjang.sthome.domain.Schedule;
-import com.esjang.sthome.domain.SearchDate;
 import com.esjang.sthome.service.ScheduleService;
+import com.esjang.sthome.util.DateCustom;
 
 @RestController
 public class ScheduleController {
@@ -41,7 +43,7 @@ public class ScheduleController {
 	
 	// 삭제
 	@DeleteMapping("/schedule/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id){
+	public ResponseEntity<?> delete(@PathVariable Integer id){
 		System.out.println("요청: delete id " + id);
 		scheduleService.delete(id);
 		return new ResponseEntity<>("삭제 성공", HttpStatus.OK);
@@ -49,15 +51,19 @@ public class ScheduleController {
 	
 	// 조회 : 1건
 	@GetMapping("/schedule/{id}")
-	public ResponseEntity<?> get(@PathVariable int id){
+	public ResponseEntity<?> get(@PathVariable Integer id){
+		System.out.println("=====================" + id);
 		Schedule schedule = scheduleService.findById(id);
 		return new ResponseEntity<>(schedule, HttpStatus.OK);
 	}
 	
 	// 조회(관리자) : 기간
 	@GetMapping("/schedule/all")
-	public ResponseEntity<?> getList(@RequestBody SearchDate searchDate){
-		List<Schedule> list = scheduleService.getAllByDateRange(searchDate.getStartDate(), searchDate.getEndDate());
+	public ResponseEntity<?> getList(@RequestParam("startDate") Long startDate, @RequestParam("endDate") Long endDate){
+		// date format change
+		Date stdate = DateCustom.longToDataCange(startDate);
+		Date eddate = DateCustom.longToDataCange(endDate);
+		List<Schedule> list = scheduleService.getAllByDateRange(stdate, eddate);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	 

@@ -1,5 +1,6 @@
 package com.esjang.sthome.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esjang.sthome.domain.SearchDate;
 import com.esjang.sthome.domain.Suggest;
 
 import com.esjang.sthome.service.SuggestService;
+import com.esjang.sthome.util.DateCustom;
 
 @RestController
 public class SuggestController {
@@ -65,22 +68,31 @@ public class SuggestController {
 	
 	// 조회(기간)
 	@GetMapping("/suggest/all")
-	public ResponseEntity<?> getListBasedate(@RequestBody SearchDate searchDate){
-		List<Suggest> list = suggestService.getAllByBasedate(searchDate.getStartDate(), searchDate.getEndDate());
+	public ResponseEntity<?> getListBasedate(@RequestParam("startDate") Long startDate, @RequestParam("endDate") Long endDate){
+		// date format change
+		Date stdate = DateCustom.longToDataCange(startDate);
+		Date eddate = DateCustom.longToDataCange(endDate);
+		List<Suggest> list = suggestService.getAllByBasedate(stdate, eddate);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
 	// 조회(사용자, 기간)
 	@GetMapping("/suggest/all/{userid}")
-	public ResponseEntity<?> getListUseridBasedate(@PathVariable String userid, @RequestBody SearchDate searchDate){
-		List<Suggest> list = suggestService.getAllByUseridBasedate(userid, searchDate.getStartDate(), searchDate.getEndDate());
+	public ResponseEntity<?> getListUseridBasedate(@PathVariable String userid, @RequestParam("startDate") Long startDate, @RequestParam("endDate") Long endDate){
+		// date format change
+		Date stdate = DateCustom.longToDataCange(startDate);
+		Date eddate = DateCustom.longToDataCange(endDate);
+		List<Suggest> list = suggestService.getAllByUseridBasedate(userid, stdate, eddate);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
 	// 조회(사용자, 기간, OK)
 	@GetMapping("/suggest/all/ok/{userid}")
-	public ResponseEntity<?> getListUseridBasedateOK(@PathVariable String userid, @RequestBody SearchDate searchDate){
-		List<Suggest> list = suggestService.getAllByUseridBasedateOK(userid, searchDate.getStartDate(), searchDate.getEndDate(), "Y");
+	public ResponseEntity<?> getListUseridBasedateOK(@PathVariable String userid, @RequestParam("startDate") Long startDate, @RequestParam("endDate") Long endDate){
+		// date format change
+		Date stdate = DateCustom.longToDataCange(startDate);
+		Date eddate = DateCustom.longToDataCange(endDate);
+		List<Suggest> list = suggestService.getAllByUseridBasedateOK(userid, stdate, eddate, "Y");
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	

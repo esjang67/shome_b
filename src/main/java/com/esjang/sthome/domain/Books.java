@@ -19,7 +19,7 @@ public class Books {
 	
 	@Id			// 기본키 컬럼 설정
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int id;
+	private Integer id;
 	
 	@Column(nullable = false, length = 50)
 	private String name;
