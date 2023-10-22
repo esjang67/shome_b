@@ -63,7 +63,10 @@ public class ScheduleController {
 		// date format change
 		Date stdate = DateCustom.longToDataCange(startDate);
 		Date eddate = DateCustom.longToDataCange(endDate);
+		System.out.println("schedule/all st " + stdate);
+		System.out.println("schedule/all ed " + eddate);
 		List<Schedule> list = scheduleService.getAllByDateRange(stdate, eddate);
+		System.out.println(list);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	 

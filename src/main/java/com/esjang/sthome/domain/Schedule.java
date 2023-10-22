@@ -23,7 +23,7 @@ public class Schedule {
 	private Integer id;
 	
 	@CreatedDate
-	@Column(updatable = false)
+	@Column(nullable = false, updatable = false)
 	private Date basedate;
 	
 	@Column(nullable = false, length = 500)

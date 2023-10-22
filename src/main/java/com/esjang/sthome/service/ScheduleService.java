@@ -39,8 +39,7 @@ public class ScheduleService {
 	
 	// 조회(관리자) : 기간
 	public List<Schedule> getAllByDateRange(Date startBasedate, Date endBasedate){
-		System.out.println(scheduleRepository.findByBasedateBetween(startBasedate, endBasedate));
-		return scheduleRepository.findByBasedateBetween(startBasedate, endBasedate);
+		return scheduleRepository.findAllByBasedateBetween(startBasedate, endBasedate);
 	}
 
 }

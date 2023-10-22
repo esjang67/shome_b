@@ -19,6 +19,11 @@ public class DoItBatchService {
 		return doItBatchRepository.findAll();
 	}	 
 	
+	// 조회 : 1건
+	public DoItBatch get(Integer id) {
+		return doItBatchRepository.findById(id).get();
+	}
+	
 	// 등록
 	public void insert(DoItBatch doitBatch){
 		doItBatchRepository.save(doitBatch);

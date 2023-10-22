@@ -2,8 +2,6 @@ package com.esjang.sthome.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +19,7 @@ import lombok.NoArgsConstructor;
 //@IdClass(DoItBatchKey.class)
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class DoItBatch {
 
 	@Id
@@ -30,14 +28,18 @@ public class DoItBatch {
 	
 //	@Column(nullable = false, length = 10)
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "userid")
+	@JoinColumn(name = "userid", referencedColumnName = "userid", insertable = true, updatable = false)
 	private User user;
 	
-	@Enumerated(EnumType.STRING)
-	private DayType defineday;
+	@Column(nullable = false, length = 7)
+	private String defineday;
 		
 	@Column(nullable = false, length = 500)
 	private String content;
+	
+//	public DoItBatch(User user) {
+//        this.user = user;
+//    }
 	
 }
 //https://www.icatpark.com/entry/jpa-%EB%B3%B5%ED%95%A9%ED%82%A4%EC%97%90%EC%84%9C-auto-increment
