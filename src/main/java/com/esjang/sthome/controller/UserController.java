@@ -28,10 +28,7 @@ public class UserController {
 		}
 		System.out.println(loginUser);
 		
-//		session.setAttribute("user", user);
-	
 		return new ResponseEntity<>(loginUser, HttpStatus.OK);
-				
 	}
 	
 //	http://localhost:8585/user/check	

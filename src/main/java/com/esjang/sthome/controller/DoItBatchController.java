@@ -39,7 +39,8 @@ public class DoItBatchController {
 	
 	// 삭제 : 관리자만 사용할수있는 삭제 (데이터오류로 인한 진짜 삭제필요함)
 	@DeleteMapping("/doitbatch/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id){
+	public ResponseEntity<?> delete(@PathVariable Integer id){
+		System.out.println(id);
 		doItBatchService.delete(id);
 		return new ResponseEntity<>("삭제 성공", HttpStatus.OK);
 	}
@@ -56,11 +57,5 @@ public class DoItBatchController {
 	public ResponseEntity<?> get(@RequestParam("id") Integer id){
 		return new ResponseEntity<>(doItBatchService.get(id), HttpStatus.OK);
 	}
+	
 }
-
-
-//{
-//    "userid":"MIN",
-//    "defineday":"월",
-//    "content":"수학문제집"
-//}

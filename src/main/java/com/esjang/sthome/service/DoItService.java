@@ -1,5 +1,6 @@
 package com.esjang.sthome.service;
 
+
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.esjang.sthome.domain.DayType;
 import com.esjang.sthome.domain.DoIt;
 import com.esjang.sthome.domain.DoItBatch;
 import com.esjang.sthome.domain.User;
@@ -30,63 +30,79 @@ public class DoItService {
 	
 	// doit 리스트는 DoItBatch 에서 가져오므로 조회시 작업이 필요함
 	// 조회 : userid, basedate 전체 
-	public List<DoIt> getAllByUseridAndBasedate(DoIt doit){
+	public List<DoIt> getAllByUseridAndBasedate(String userid, Date basedate){
 		// 1 doit에 기준일자+사용자 로 저장된 리스트가 있는지 확인
-		List<DoIt> doitList = doItRepository.findAllByUserAndBasedate(doit.getUser().getUserid(), doit.getBasedate());
+		User user = new User();
+		user.setUserid(userid);
+		  
+		String indate = basedate.toString();
+		System.out.println("요청 " + userid + "/" + indate);
 		
+		List<DoIt> doitList = doItRepository.findListByUserAndIndate(user, indate);
+		
+		System.out.println("doitList " + doitList);
 		// 2 1번 리스트가 없으면 DoItBatch 에서 조회 insert 작업
 		if(doitList == null || doitList.size() == 0) {
 			// basedate -> 요일로 변경해야함
-			String dayStr = getDayStr(doit.getBasedate());
+			String dayStr = getDayStr(basedate);
 			
-			List<DoItBatch> batchList = getFromDoItBatchByUserDay(doit.getUser().getUserid(), dayStr);
-			insertDoit(batchList, doit);
+			// batch에서 요일 + 사용자 로 조회
+			List<DoItBatch> batchList = getFromDoItBatchByUserDay(user, dayStr);
+			System.out.println(batchList);
+			// doit으로 저장
 			
-			doitList = doItRepository.findAllByUserAndBasedate(doit.getUser().getUserid(), doit.getBasedate());
+			insertDoit(batchList, userid, basedate);
+			
+			doitList = doItRepository.findListByUserAndIndate(user, indate);
 		}
 
 		return doitList;
+	}
+	
+	// DoItBatch 에서 조회
+	// 조회 : 요일 + 사용자 으로 조회한 list
+	private List<DoItBatch> getFromDoItBatchByUserDay(User userid, String defineday){
+		return doItBatchRepository.findAllListByUserAndDefinedayContaining(userid, defineday);
+	}
+	
+	// doitList insert : DoItBatch -> DoIt 으로 변경해서 저장함
+	@Transactional
+	private void insertDoit(List<DoItBatch> batchs, String userid, Date basedate) {
+		System.out.println("DoItBatch List Insert Cnt : " + batchs.size());
+		User user = userRepository.findById(userid).get();
+
+		for(DoItBatch batch : batchs) {
+			// DoIt 으로 변경함
+			DoIt doit = new DoIt();
+
+			doit.setBasedate(basedate);
+			doit.setIndate(basedate.toString());
+			doit.setUser(user);
+			doit.setContent(batch.getContent());
+			doit.setDone("N");
+			
+			System.out.println("Doit New Save : " + doit);
+			doItRepository.save(doit);
+		}
 	}
 
 	// 등록 : 조회 작업시 작업됨	
 	
 	// 수정 : done -> true
-	public void updateToDone(int id) {
+	public void updateToDone(Integer id) {
 		DoIt doit = doItRepository.findById(id).get();
-		doit.setDone("Y");
+		
+		System.out.println(doit);
+		doit.setDone((doit.getDone().equals("Y") ? "N" : "Y"));
+		System.out.println(doit);
+		
 		doItRepository.save(doit);
 	}	
 	// 삭제 : userid, basedate 전체 삭제
 	public void deleteToDayList(DoIt doit){
 		doItRepository.deleteByUserAndBasedate(doit.getUser().getUserid(), doit.getBasedate());
 	}
-	
-	// DoItBatch 에서 조회
-	// 조회 : 요일 + 사용자 으로 조회한 list
-	private List<DoItBatch> getFromDoItBatchByUserDay(String userid, String defineday){
-		System.out.println(doItBatchRepository.findAllListByUserAndDefineday(userid, DayType.valueOf(defineday)));
-		return doItBatchRepository.findAllListByUserAndDefineday(userid, DayType.valueOf(defineday));
-	}
-	
-	// doitList insert : DoItBatch -> DoIt 으로 변경해서 저장함
-	@Transactional
-	private void insertDoit(List<DoItBatch> batchs, DoIt setDoIt) {
-		System.out.println("DoItBatch List Insert Cnt : " + batchs.size());
-		User user = userRepository.findById(setDoIt.getUser().getUserid()).get();
 		
-		for(DoItBatch batch : batchs) {
-			// DoIt 으로 변경함
-			DoIt doit = new DoIt();
-			doit.setBasedate(setDoIt.getBasedate());
-			doit.setUser(user);
-			doit.setContent(batch.getContent());
-			doit.setDone("Y");
-			
-			System.out.println("Doit New Save : " + doit);
-			doItRepository.save(doit);
-		}
-	}
-	
 	// String  basedate에서 요일 가져오기
 	private String getDayStr(Date basedate) {
 		Calendar cal = Calendar.getInstance();

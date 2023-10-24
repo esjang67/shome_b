@@ -13,7 +13,7 @@ public class DoItBatchService {
 	
 	@Autowired
 	private DoItBatchRepository doItBatchRepository;
-		
+	
 	// 조회 : 전체(관리자용)
 	public List<DoItBatch> getAll(){
 		return doItBatchRepository.findAll();
@@ -38,8 +38,8 @@ public class DoItBatchService {
 	}
 	
 	// 삭제 : 관리자만 사용할수있는 삭제 (데이터오류로 인한 진짜 삭제 필요할때)
-	public void delete(int id){
+	public void delete(Integer id){
 		doItBatchRepository.deleteById(id);
 	}
-	
+		
 }

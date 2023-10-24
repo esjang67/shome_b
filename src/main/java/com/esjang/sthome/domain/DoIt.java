@@ -1,5 +1,7 @@
 package com.esjang.sthome.domain;
 
+
+
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -24,16 +27,19 @@ public class DoIt {
 	@Id			// 기본키 컬럼 설정
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
-	
+	 
 //	@Column(nullable = false, length = 10)
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "userid")
+	@JoinColumn(name = "userid", referencedColumnName = "userid", insertable = true, updatable = false)
 	private User user;
 	
-	//@CreatedDate, @LastModifiedDate를 사용하여 생성된 시간 정보, 수정된 시간 정보를 자동으로 저장할 수 있다
-	@CreatedDate()
-	@Column(updatable = false)
+	@CreatedDate
+	@Column(nullable = false, updatable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd") 
 	private Date basedate;
+	
+	@Column(nullable = false)
+	private String indate;
 	
 	@Column(nullable = false, length = 500)
 	private String content;

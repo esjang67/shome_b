@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -29,6 +30,8 @@ public class Suggest {
 	private Integer id;
 	
 	@CreatedDate()
+	@Column(updatable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date basedate;
 
 	@ManyToOne(fetch = FetchType.EAGER)

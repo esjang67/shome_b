@@ -1,5 +1,7 @@
 package com.esjang.sthome.controller;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esjang.sthome.domain.DoIt;
 import com.esjang.sthome.service.DoItService;
+import com.esjang.sthome.util.DateCustom;
 
 @RestController
 public class DoItController {
@@ -21,14 +25,17 @@ public class DoItController {
 	
 	// 조회 : 기준일자 + 사용자 로 조회
 	@GetMapping("/doit")
-	public ResponseEntity<?> get(@RequestBody DoIt doIt){
-		System.out.println("요청: " + doIt);
-		return new ResponseEntity<>(doItService.getAllByUseridAndBasedate(doIt), HttpStatus.OK);
-	}
+	public ResponseEntity<?> get(@RequestParam("userid") String userid, @RequestParam("basedate") Long basedate){
+		// date format change
+		Date basedt = DateCustom.longToDataCange(basedate);
+		System.out.println("요청: " + basedt);
+		return new ResponseEntity<>(doItService.getAllByUseridAndBasedate(userid, basedt), HttpStatus.OK);
+	} 
 	
 	// 수정 : done true
 	@PutMapping("/doit/{id}")
-	public ResponseEntity<?> update(@PathVariable int id){
+	public ResponseEntity<?> update(@PathVariable Integer id){
+		System.out.println("요청: " + id);
 		doItService.updateToDone(id);
 		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
 	}
