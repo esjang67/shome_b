@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.esjang.sthome.domain.Suggest;
 import com.esjang.sthome.domain.User;
@@ -30,10 +31,13 @@ public class SuggestService {
 	}
 	
 	// 수정 (okflag)
-	public void updateToOkflag(int id) {
+	@Transactional
+	public void updateToOkflag(Integer id) {
 		Suggest oriSuggest = suggestRopository.findById(id).get();
 		oriSuggest.setOkflag("Y");
 		suggestRopository.save(oriSuggest);
+		
+		// ok 했으면 일정에 추가할것!!!
 	}
 	
 	// 삭제
