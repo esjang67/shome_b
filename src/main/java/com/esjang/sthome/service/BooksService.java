@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 import com.esjang.sthome.domain.BookCollect;
 import com.esjang.sthome.domain.Books;
 import com.esjang.sthome.repository.BookCollectRepository;
-import com.esjang.sthome.repository.BoosRepository;
+import com.esjang.sthome.repository.BookRepository;
 
 @Service
 public class BooksService {
 	
 	@Autowired
-	private BoosRepository booksRepository;
+	private BookRepository booksRepository;
 	
 	@Autowired
 	private BookCollectRepository bookCollectRepository;

@@ -1,6 +1,6 @@
 package com.esjang.sthome.domain;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -29,10 +28,8 @@ public class Suggest {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 	
-	@CreatedDate()
-	@Column(updatable = false)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date basedate;
+	@CreatedDate
+	private LocalDate basedate;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userid")

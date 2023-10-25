@@ -1,7 +1,7 @@
 package com.esjang.sthome.repository;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,8 +21,8 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 //	public List<Coupon> findTop30ByUser(String userid);
 	
 	// 기간 조회
-	public List<Coupon> findByBasedateBetween(Date start, Date end);
+	public List<Coupon> findByBasedateBetween(LocalDate start, LocalDate end);
 	
 	// 사용자별  기간 조회
-	public List<Coupon> findByUserAndBasedateBetween(String userid, Date start, Date end);
+	public List<Coupon> findByUserAndBasedateBetween(String userid, LocalDate start, LocalDate end);
 }

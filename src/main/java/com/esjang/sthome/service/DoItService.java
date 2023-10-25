@@ -38,6 +38,7 @@ public class DoItService {
 	
 	// doit 리스트는 DoItBatch 에서 가져오므로 조회시 작업이 필요함
 	// 조회 : userid, basedate 전체 
+	@Transactional
 	public List<DoIt> getAllByUseridAndBasedate(String userid, Date basedate){
 		// 1 doit에 기준일자+사용자 로 저장된 리스트가 있는지 확인
 		User user = new User();
@@ -74,7 +75,6 @@ public class DoItService {
 	}
 	
 	// doitList insert : DoItBatch -> DoIt 으로 변경해서 저장함
-	@Transactional
 	private void insertDoit(List<DoItBatch> batchs, String userid, Date basedate) {
 		System.out.println("DoItBatch List Insert Cnt : " + batchs.size());
 		User user = userRepository.findById(userid).get();

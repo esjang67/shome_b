@@ -1,7 +1,5 @@
 package com.esjang.sthome.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,6 @@ import com.esjang.sthome.domain.Coupon;
 import com.esjang.sthome.domain.CouponTime;
 import com.esjang.sthome.service.CouponService;
 import com.esjang.sthome.service.CouponTimeService;
-import com.esjang.sthome.util.DateCustom;
 
 @RestController
 public class CouponController {
@@ -31,21 +28,18 @@ public class CouponController {
 	// coupon
 	// 조회 : 기간 조회
 	@GetMapping("/coupon/all")
-	public ResponseEntity<?> getAllBasedate(@RequestParam("startDate") Long startDate, @RequestParam("endDate") Long endDate){
-		// date format change
-		Date stdate = DateCustom.longToDataCange(startDate);
-		Date eddate = DateCustom.longToDataCange(endDate);
+	public ResponseEntity<?> getAllBasedate(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
 		
-		return new ResponseEntity<>(couponService.getAllByDateRange(stdate, eddate), HttpStatus.OK);
+		return new ResponseEntity<>(couponService.getAllByDateRange(startDate, endDate), HttpStatus.OK);
 	}
 	
 	// 조회 : 사용자별 기간 조회
 	@GetMapping("/coupon/all/user")
-	public ResponseEntity<?> getAllBasedateUser(@RequestParam("userid") String userid, @RequestParam("startDate") Long startDate, @RequestParam("endDate") Long endDate){
-		// date format change
-		Date stdate = DateCustom.longToDataCange(startDate);
-		Date eddate = DateCustom.longToDataCange(endDate);
-		return new ResponseEntity<>(couponService.getAllByUserDateRange(userid, stdate, eddate), HttpStatus.OK);
+	public ResponseEntity<?> getAllBasedateUser(@RequestParam("userid") String userid, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
+//		// date format change
+//		Date stdate = DateCustom.longToDataCange(startDate);
+//		Date eddate = DateCustom.longToDataCange(endDate);
+		return new ResponseEntity<>(couponService.getAllByUserDateRange(userid, startDate, endDate), HttpStatus.OK);
 	}
 	
 	// 기타 쿠폰 입력
