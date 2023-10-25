@@ -32,6 +32,15 @@ public class DoItController {
 		return new ResponseEntity<>(doItService.getAllByUseridAndBasedate(userid, basedt), HttpStatus.OK);
 	} 
 	
+	// 할일 조회(전체, 기준일자)
+	@GetMapping("/doit/all")
+	public ResponseEntity<?> getAll(@RequestParam("basedate") Long basedate){
+		// date format change
+		Date basedt = DateCustom.longToDataCange(basedate);
+		System.out.println("요청: " + basedt);
+		return new ResponseEntity<>(doItService.getAllByBasedate(basedt), HttpStatus.OK);
+	} 
+	
 	// 수정 : done true
 	@PutMapping("/doit/{id}")
 	public ResponseEntity<?> update(@PathVariable Integer id){

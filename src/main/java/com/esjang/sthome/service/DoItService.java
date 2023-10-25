@@ -28,6 +28,14 @@ public class DoItService {
 	@Autowired
 	private DoItBatchRepository doItBatchRepository;
 	
+	// 할일 조회(전체, 기준일자)
+	public List<DoIt> getAllByBasedate(Date basedate){
+		String indate = basedate.toString();
+		List<DoIt> doitList = doItRepository.findListByIndate(indate);
+		
+		return doitList;
+	}
+	
 	// doit 리스트는 DoItBatch 에서 가져오므로 조회시 작업이 필요함
 	// 조회 : userid, basedate 전체 
 	public List<DoIt> getAllByUseridAndBasedate(String userid, Date basedate){

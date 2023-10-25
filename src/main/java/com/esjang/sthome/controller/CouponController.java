@@ -40,8 +40,8 @@ public class CouponController {
 	}
 	
 	// 조회 : 사용자별 기간 조회
-	@GetMapping("/coupon/all/{userid}")
-	public ResponseEntity<?> getAllBasedateUser(@PathVariable String userid, @RequestParam("startDate") Long startDate, @RequestParam("endDate") Long endDate){
+	@GetMapping("/coupon/all/user")
+	public ResponseEntity<?> getAllBasedateUser(@RequestParam("userid") String userid, @RequestParam("startDate") Long startDate, @RequestParam("endDate") Long endDate){
 		// date format change
 		Date stdate = DateCustom.longToDataCange(startDate);
 		Date eddate = DateCustom.longToDataCange(endDate);

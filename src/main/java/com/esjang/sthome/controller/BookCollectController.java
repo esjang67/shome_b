@@ -1,7 +1,5 @@
 package com.esjang.sthome.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esjang.sthome.domain.BookCollect;
@@ -46,10 +45,15 @@ public class BookCollectController {
 		return new ResponseEntity<>("삭제 성공", HttpStatus.OK);
 	}
 	
+	// 조회(전체)
+	@GetMapping("/collect/all")
+	public ResponseEntity<?> getList(){
+		return new ResponseEntity<>(bookColService.getAllList(), HttpStatus.OK);
+	}
 	// 조회
 	@GetMapping("/collect")
-	public ResponseEntity<?> getListByColid(){
-		List<BookCollect> list = bookColService.getAllList();
-		return new ResponseEntity<>(list, HttpStatus.OK);
+	public ResponseEntity<?> getCollect(@RequestParam("id") Integer id){
+		System.out.println("collect id " + id);
+		return new ResponseEntity<>(bookColService.getData(id), HttpStatus.OK);
 	}
 }

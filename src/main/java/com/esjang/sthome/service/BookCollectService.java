@@ -38,5 +38,9 @@ public class BookCollectService {
 		return list;
 	}
 	
+	// 조회(1건) 
+	public BookCollect getData(Integer id){
+		return bookColRepository.findById(id).get();
+	}
 	
 }

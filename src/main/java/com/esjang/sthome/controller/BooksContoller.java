@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esjang.sthome.domain.Books;
@@ -47,16 +48,16 @@ public class BooksContoller {
 	}
 	
 	// 조회 책ID
-	@GetMapping("/book/{id}")
-	public ResponseEntity<?> getBook(@PathVariable int id){
+	@GetMapping("/book")
+	public ResponseEntity<?> getBook(@RequestParam("id")  int id){
 		return new ResponseEntity<>(booksService.getById(id), HttpStatus.OK);
 	}
 	
 	// 조회 (전집id로 조회하는 list)
-	@GetMapping("/book/all/{colid}")
-	public ResponseEntity<?> getListByColid(@PathVariable int colid){
+	@GetMapping("/book/all")
+	public ResponseEntity<?> getListByColid(@RequestParam("colid")  int colid){
 		System.out.println("요청: list colid " + colid);
-		List<Books> list = booksService.getAllListByBookcolId(colid);
+		List<Books> list = booksService.getAllListByCollectid(colid);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	

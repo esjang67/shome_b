@@ -25,10 +25,10 @@ public class Books {
 	private String name;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "bookcolid", referencedColumnName = "id")
-	private BookCollect bookCollect;
+	@JoinColumn(name = "collectid", referencedColumnName = "id")
+	private BookCollect bookcollect;
 	
 //	@Column(columnDefinition = "boolean default false")
 	@Column(columnDefinition = "varchar(1) default 'N'")
-	private boolean delyn;
+	private String delyn;
 }

@@ -14,8 +14,11 @@ import com.esjang.sthome.domain.User;
 public interface DoItRepository extends JpaRepository<DoIt, Integer> {
 //	public List<DoIt> findAllByUser(User user);
 	
+	// 조회 : 사용자 + 기준일자
 	public List<DoIt> findListByUserAndIndate(User user, String indate);
 	
+	// 조회 : 기준일자
+	public List<DoIt> findListByIndate(String indate);
 	
 //	@Query(value = "select * from tbl_doit where userid=:userid and basedate=:basedate")
 //	public List<DoIt> selfindAllByUserAndBasedate(@Param(value = "userid") String userid, 
