@@ -1,5 +1,6 @@
 package com.esjang.sthome.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +40,16 @@ public class SuggestController {
 		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
 	}
 	
-	// 수정 (okflag)
+	// 수정 (okflag) -> 일정추가할것!!!
 	@PutMapping("/suggest/ok/{id}")
-	public ResponseEntity<?> updateOkflag(@PathVariable int id){
-		System.out.println("요청: " + id);
-		suggestService.updateToOkflag(id);
+	public ResponseEntity<?> updateOkflag(@PathVariable Integer id, @RequestBody HashMap<String, String> seldate){
+		suggestService.updateToOkflag(id, seldate.get("seldate"));
 		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
 	}
 	
 	// 삭제
 	@DeleteMapping("/suggest/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id){
+	public ResponseEntity<?> delete(@PathVariable Integer id){
 		System.out.println("요청: delete id " + id);
 		suggestService.delete(id);
 		return new ResponseEntity<>("삭제 성공", HttpStatus.OK);
@@ -57,7 +57,7 @@ public class SuggestController {
 	
 	// 조회 : 1건
 	@GetMapping("/suggest/{id}")
-	public ResponseEntity<?> get(@PathVariable int id){
+	public ResponseEntity<?> get(@PathVariable Integer id){
 		Suggest suggest = suggestService.findById(id);
 		return new ResponseEntity<>(suggest, HttpStatus.OK);
 	}

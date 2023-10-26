@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esjang.sthome.domain.Schedule;
 import com.esjang.sthome.domain.Suggest;
 import com.esjang.sthome.domain.User;
 import com.esjang.sthome.repository.SuggestRopository;
@@ -17,6 +18,9 @@ public class SuggestService {
 	
 	@Autowired
 	private SuggestRopository suggestRopository;
+	
+	@Autowired
+	private ScheduleService scheduleService;
 	
 	// 등록
 	public void insert(Suggest suggest) {
@@ -32,12 +36,19 @@ public class SuggestService {
 	
 	// 수정 (okflag)
 	@Transactional
-	public void updateToOkflag(Integer id) {
+	public void updateToOkflag(Integer id, String selDate) {
 		Suggest oriSuggest = suggestRopository.findById(id).get();
 		oriSuggest.setOkflag("Y");
 		suggestRopository.save(oriSuggest);
 		
 		// ok 했으면 일정에 추가할것!!!
+		Schedule schedule = new Schedule();
+		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
+		LocalDate stdate = LocalDate.parse(selDate,f);
+	
+		schedule.setBasedate(stdate);
+		schedule.setContent("[" + oriSuggest.getUser().getName() + "] " + oriSuggest.getContent());
+		scheduleService.insert(schedule);
 	}
 	
 	// 삭제
@@ -57,7 +68,7 @@ public class SuggestService {
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return suggestRopository.findByBasedateBetween(stdate, eddate);
+		return suggestRopository.findByBasedateBetweenOrderByIdDesc(stdate, eddate);
 	}
 	
 	//	조회(사용자, 기간)
@@ -67,7 +78,7 @@ public class SuggestService {
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return suggestRopository.findByUserAndBasedateBetween(user, stdate, eddate);
+		return suggestRopository.findByUserAndBasedateBetweenOrderByIdDesc(user, stdate, eddate);
 	}
 	
 	//	조회(사용자, 기간, OK)
@@ -77,14 +88,14 @@ public class SuggestService {
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return suggestRopository.findByUserAndBasedateBetweenAndOkflagIs(user, stdate, eddate, okflag);
+		return suggestRopository.findByUserAndBasedateBetweenAndOkflagIsOrderByIdDesc(user, stdate, eddate, okflag);
 	}
 	//	조회(기간, OK)	
 	public List<Suggest> getAllByBasedateOK(String start, String end, String okflag){
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return suggestRopository.findByBasedateBetweenAndOkflagIs(stdate, eddate, okflag);
+		return suggestRopository.findByBasedateBetweenAndOkflagIsOrderByIdDesc(stdate, eddate, okflag);
 	}
 	
 }

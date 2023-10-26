@@ -1,6 +1,6 @@
 package com.esjang.sthome.repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +12,6 @@ import com.esjang.sthome.domain.Schedule;
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 	
 	// 조회 : 기간
-	public List<Schedule> findAllByBasedateBetween(Date startBasedate, Date endBasedate);
+	public List<Schedule> findAllByBasedateBetween(LocalDate startBasedate, LocalDate endBasedate);
 	
 }

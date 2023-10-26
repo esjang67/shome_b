@@ -14,17 +14,17 @@ import com.esjang.sthome.domain.User;
 public interface SuggestRopository extends JpaRepository<Suggest, Integer> {
 
 	// 조회(관리자) : 기간
-	public List<Suggest> findByBasedateBetween(LocalDate start, LocalDate end);
+	public List<Suggest> findByBasedateBetweenOrderByIdDesc(LocalDate start, LocalDate end);
 	
 	
 	//	조회(사용자, 기간)
-	public List<Suggest> findByUserAndBasedateBetween(User user, LocalDate start, LocalDate end);
+	public List<Suggest> findByUserAndBasedateBetweenOrderByIdDesc(User user, LocalDate start, LocalDate end);
 	
 	//	조회(사용자, 기간, OK)
-	public List<Suggest> findByUserAndBasedateBetweenAndOkflagIs(User user, LocalDate start, LocalDate end, String okflag);
+	public List<Suggest> findByUserAndBasedateBetweenAndOkflagIsOrderByIdDesc(User user, LocalDate start, LocalDate end, String okflag);
 	
 	//	조회(기간, OK)
-	public List<Suggest> findByBasedateBetweenAndOkflagIs(LocalDate start, LocalDate end, String okflag);
+	public List<Suggest> findByBasedateBetweenAndOkflagIsOrderByIdDesc(LocalDate start, LocalDate end, String okflag);
 
 
 }

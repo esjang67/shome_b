@@ -1,7 +1,8 @@
 package com.esjang.sthome.service;
 
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,11 @@ public class ScheduleService {
 	}
 	
 	// 조회(관리자) : 기간
-	public List<Schedule> getAllByDateRange(Date startBasedate, Date endBasedate){
-		return scheduleRepository.findAllByBasedateBetween(startBasedate, endBasedate);
+	public List<Schedule> getAllByDateRange(String start, String end){
+		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
+		LocalDate stdate = LocalDate.parse(start,f);
+		LocalDate eddate = LocalDate.parse(end,f);
+		return scheduleRepository.findAllByBasedateBetween(stdate, eddate);
 	}
 
 }

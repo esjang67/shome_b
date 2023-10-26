@@ -1,6 +1,5 @@
 package com.esjang.sthome.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.esjang.sthome.domain.Schedule;
 import com.esjang.sthome.service.ScheduleService;
-import com.esjang.sthome.util.DateCustom;
 
 @RestController
 public class ScheduleController {
@@ -59,13 +57,14 @@ public class ScheduleController {
 	
 	// 조회(관리자) : 기간
 	@GetMapping("/schedule/all")
-	public ResponseEntity<?> getList(@RequestParam("startDate") Long startDate, @RequestParam("endDate") Long endDate){
-		// date format change
-		Date stdate = DateCustom.longToDataCange(startDate);
-		Date eddate = DateCustom.longToDataCange(endDate);
-		System.out.println("schedule/all st " + stdate);
-		System.out.println("schedule/all ed " + eddate);
-		List<Schedule> list = scheduleService.getAllByDateRange(stdate, eddate);
+	public ResponseEntity<?> getList(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
+		System.out.println(startDate);
+//		// date format change
+//		Date stdate = DateCustom.longToDataCange(startDate);
+//		Date eddate = DateCustom.longToDataCange(endDate);
+//		System.out.println("schedule/all st " + stdate);
+//		System.out.println("schedule/all ed " + eddate);
+		List<Schedule> list = scheduleService.getAllByDateRange(startDate, endDate);
 		System.out.println(list);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
