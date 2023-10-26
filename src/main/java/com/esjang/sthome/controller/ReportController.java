@@ -39,7 +39,7 @@ public class ReportController {
 	
 	// 삭제(관리자용)
 	@DeleteMapping("/report/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id){
+	public ResponseEntity<?> delete(@PathVariable Integer id){
 		System.out.println("요청: delete id " + id);
 		reportService.delete(id);
 		return new ResponseEntity<>("삭제 성공", HttpStatus.OK);

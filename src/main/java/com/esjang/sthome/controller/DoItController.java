@@ -1,7 +1,5 @@
 package com.esjang.sthome.controller;
 
-import java.sql.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.esjang.sthome.domain.DoIt;
 import com.esjang.sthome.service.DoItService;
-import com.esjang.sthome.util.DateCustom;
 
 @RestController
 public class DoItController {
@@ -25,20 +22,20 @@ public class DoItController {
 	
 	// 조회 : 기준일자 + 사용자 로 조회
 	@GetMapping("/doit")
-	public ResponseEntity<?> get(@RequestParam("userid") String userid, @RequestParam("basedate") Long basedate){
-		// date format change
-		Date basedt = DateCustom.longToDataCange(basedate);
-		System.out.println("요청: " + basedt);
-		return new ResponseEntity<>(doItService.getAllByUseridAndBasedate(userid, basedt), HttpStatus.OK);
+	public ResponseEntity<?> get(@RequestParam("userid") String userid, @RequestParam("basedate") String basedate){
+//		// date format change
+//		Date basedt = DateCustom.longToDataCange(basedate);
+//		System.out.println("요청: " + basedt);
+		return new ResponseEntity<>(doItService.getAllByUseridAndBasedate(userid, basedate), HttpStatus.OK);
 	} 
 	
 	// 할일 조회(전체, 기준일자)
 	@GetMapping("/doit/all")
-	public ResponseEntity<?> getAll(@RequestParam("basedate") Long basedate){
-		// date format change
-		Date basedt = DateCustom.longToDataCange(basedate);
-		System.out.println("요청: " + basedt);
-		return new ResponseEntity<>(doItService.getAllByBasedate(basedt), HttpStatus.OK);
+	public ResponseEntity<?> getAll(@RequestParam("basedate") String basedate){
+//		// date format change
+//		Date basedt = DateCustom.longToDataCange(basedate);
+//		System.out.println("요청: " + basedt);
+		return new ResponseEntity<>(doItService.getAllByBasedate(basedate), HttpStatus.OK);
 	} 
 	
 	// 수정 : done true

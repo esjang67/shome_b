@@ -1,7 +1,7 @@
 package com.esjang.sthome.repository;
 
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,18 +15,21 @@ public interface DoItRepository extends JpaRepository<DoIt, Integer> {
 //	public List<DoIt> findAllByUser(User user);
 	
 	// 조회 : 사용자 + 기준일자
-	public List<DoIt> findListByUserAndIndate(User user, String indate);
+	public List<DoIt> findListByUserAndBasedate(User user, LocalDate basedate);
 	
 	// 조회 : 기준일자
-	public List<DoIt> findListByIndate(String indate);
+	public List<DoIt> findListByBasedate(LocalDate basedate);
+	
+	// 갯수 : 오늘의 할일을 다 완료했는가?? 안한갯수 가져오기
+	public int countByUserAndBasedateAndDoneIs(User user, LocalDate basedate, String done);
+	
+	public List<DoIt> findAllByUser(String userid);
+	
+	public void deleteByUserAndBasedate(String userid, LocalDate basedate);
 	
 //	@Query(value = "select * from tbl_doit where userid=:userid and basedate=:basedate")
 //	public List<DoIt> selfindAllByUserAndBasedate(@Param(value = "userid") String userid, 
 //			@Param(value = "basedate") Date basedate);
-	
-	public List<DoIt> findAllByUser(String userid);
-	
-	public void deleteByUserAndBasedate(String userid, Date basedate);
 	
 //	Containing
 	

@@ -2,7 +2,7 @@ package com.esjang.sthome.domain;
 
 
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -34,12 +33,7 @@ public class DoIt {
 	private User user;
 	
 	@CreatedDate
-	@Column(nullable = false, updatable = false)
-	@DateTimeFormat(pattern = "yyyy-MM-dd") 
-	private Date basedate;
-	
-	@Column(nullable = false)
-	private String indate;
+	private LocalDate basedate;
 	
 	@Column(nullable = false, length = 500)
 	private String content;

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.esjang.sthome.domain.Coupon;
 import com.esjang.sthome.domain.CouponTime;
+import com.esjang.sthome.domain.User;
 import com.esjang.sthome.repository.CouponRepository;
 
 @Service
@@ -25,7 +26,7 @@ public class CouponService {
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return couponRepository.findByBasedateBetween(stdate, eddate);
+		return couponRepository.findByBasedateBetweenOrderByIdDesc(stdate, eddate);
 	}
 
 	// 조회 : 사용자별, 기간
@@ -33,7 +34,9 @@ public class CouponService {
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return couponRepository.findByUserAndBasedateBetween(userid, stdate, eddate);
+		User user = new User();
+		user.setUserid(userid);
+		return couponRepository.findByUserAndBasedateBetweenOrderByIdDesc(user, stdate, eddate);
 	}
 	
 	// [시스템]
@@ -50,7 +53,7 @@ public class CouponService {
 		CouponTime time = timeService.getTimeByUserid(userid);
 		
 		// 1-1 userid 가 없으면 생성함
-		if(time.getUserid() == null) {
+		if(time.getUser() == null) {
 			time = timeService.insertTime(userid);
 		}
 		// 2 time 에 Playtime 더하기

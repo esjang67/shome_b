@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.esjang.sthome.domain.Coupon;
+import com.esjang.sthome.domain.User;
 
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
@@ -21,8 +22,8 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 //	public List<Coupon> findTop30ByUser(String userid);
 	
 	// 기간 조회
-	public List<Coupon> findByBasedateBetween(LocalDate start, LocalDate end);
+	public List<Coupon> findByBasedateBetweenOrderByIdDesc(LocalDate start, LocalDate end);
 	
 	// 사용자별  기간 조회
-	public List<Coupon> findByUserAndBasedateBetween(String userid, LocalDate start, LocalDate end);
+	public List<Coupon> findByUserAndBasedateBetweenOrderByIdDesc(User user, LocalDate start, LocalDate end);
 }
