@@ -43,7 +43,7 @@ public class ScheduleService {
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return scheduleRepository.findAllByBasedateBetween(stdate, eddate);
+		return scheduleRepository.findAllByBasedateBetweenOrderByBasedateDesc(stdate, eddate);
 	}
 
 }

@@ -43,6 +43,7 @@ public class SuggestController {
 	// 수정 (okflag) -> 일정추가할것!!!
 	@PutMapping("/suggest/ok/{id}")
 	public ResponseEntity<?> updateOkflag(@PathVariable Integer id, @RequestBody HashMap<String, String> seldate){
+		System.out.println("제안내용 -> 일정등록 " + id + "/" + seldate);
 		suggestService.updateToOkflag(id, seldate.get("seldate"));
 		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
 	}

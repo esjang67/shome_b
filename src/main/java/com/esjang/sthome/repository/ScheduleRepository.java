@@ -12,6 +12,6 @@ import com.esjang.sthome.domain.Schedule;
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 	
 	// 조회 : 기간
-	public List<Schedule> findAllByBasedateBetween(LocalDate startBasedate, LocalDate endBasedate);
+	public List<Schedule> findAllByBasedateBetweenOrderByBasedateDesc(LocalDate startBasedate, LocalDate endBasedate);
 	
 }

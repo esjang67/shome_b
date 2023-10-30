@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esjang.sthome.domain.DoItBatch;
+import com.esjang.sthome.domain.User;
 import com.esjang.sthome.repository.DoItBatchRepository;
+import com.esjang.sthome.repository.UserRepository;
 
 @Service
 public class DoItBatchService {
@@ -14,9 +16,19 @@ public class DoItBatchService {
 	@Autowired
 	private DoItBatchRepository doItBatchRepository;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
 	// 조회 : 전체(관리자용)
 	public List<DoItBatch> getAll(){
 		return doItBatchRepository.findAll();
+	}	 
+	
+	// 조회 : 전체(관리자용)
+	public List<DoItBatch> getAllByUser(String userid){
+		User user = new User();
+		user = userRepository.findById(userid).get();
+		return doItBatchRepository.findAllListByUser(user);
 	}	 
 	
 	// 조회 : 1건

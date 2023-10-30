@@ -40,7 +40,7 @@ public class ReportService {
 			book = bookRepository.findById(report.getBook().getId()).get();
 			Coupon coupon = new Coupon();
 			coupon.setBasedate(report.getBasedate());
-			coupon.setContent("[독후감] " + book.getName());
+			coupon.setContent("독후감 - " + book.getName());
 			coupon.setPlaytime(10);
 			coupon.setType(CouponType.BOOK);
 			coupon.setUser(report.getUser());

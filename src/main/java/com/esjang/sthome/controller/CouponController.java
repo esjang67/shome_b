@@ -68,7 +68,7 @@ public class CouponController {
 		String userid = useTime.get("id");
 		Integer time = Integer.parseInt(useTime.get("time"));
 		timeService.updateSubTime(userid, time);
-		return new ResponseEntity<>("쿠톤시간 사용", HttpStatus.OK);
+		return new ResponseEntity<>("쿠폰시간 사용", HttpStatus.OK);
 	}
 	
 	

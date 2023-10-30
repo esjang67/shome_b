@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -20,10 +21,16 @@ import lombok.Data;
 @Entity
 @Table(name = "tbl_report")
 @Data
+@SequenceGenerator(
+		name = "REPORT_SEQ_GENERATOR"
+	    , sequenceName = "REPORT_SEQ"
+	    , initialValue = 1
+	    , allocationSize = 1
+	)
 public class Report {
 	
 	@Id			// 기본키 컬럼 설정
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REPORT_SEQ_GENERATOR")
 	private Integer id;
 	
 //	@CreatedDate

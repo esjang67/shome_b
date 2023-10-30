@@ -116,7 +116,7 @@ public class DoItService {
 		if(notCnt == 0) {
 			Coupon coupon = new Coupon();
 			coupon.setBasedate(doit.getBasedate());
-			coupon.setContent("[오늘할일] 완료");
+			coupon.setContent("오늘의 할일 완료");
 			coupon.setPlaytime(10);
 			coupon.setType(CouponType.ONEDAY);
 			coupon.setUser(doit.getUser());

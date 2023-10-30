@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -18,11 +19,16 @@ import lombok.NoArgsConstructor;
 //@IdClass(DoItBatchKey.class)
 @Data
 @NoArgsConstructor
-//@AllArgsConstructor
+@SequenceGenerator(
+		name = "BATCH_SEQ_GENERATOR"
+	    , sequenceName = "BATCH_SEQ"
+	    , initialValue = 1
+	    , allocationSize = 1
+	)
 public class DoItBatch {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BATCH_SEQ_GENERATOR")
 	private Integer	id;
 	
 //	@Column(nullable = false, length = 10)

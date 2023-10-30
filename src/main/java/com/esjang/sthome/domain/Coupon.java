@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -21,10 +22,16 @@ import lombok.Data;
 @Entity
 @Table(name = "tbl_coupon")
 @Data
+@SequenceGenerator(
+		name = "COUPON_SEQ_GENERATOR"
+	    , sequenceName = "COUPON_SEQ"
+	    , initialValue = 1
+	    , allocationSize = 1
+	)
 public class Coupon {
 	
 	@Id			// 기본키 컬럼 설정
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COUPON_SEQ_GENERATOR")
 	private Integer id;
 	
 	@CreatedDate()

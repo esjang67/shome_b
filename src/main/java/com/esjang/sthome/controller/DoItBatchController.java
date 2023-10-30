@@ -48,8 +48,13 @@ public class DoItBatchController {
 	// 조회 : 전체(관리자용)
 	@GetMapping("/doitbatch/all")
 	public ResponseEntity<?> getAll(){
-		System.out.println("요청: ");
 		return new ResponseEntity<>(doItBatchService.getAll(), HttpStatus.OK);
+	}
+	
+	// 조회 : 전체(사용자별)
+	@GetMapping("/doitbatch/all/user")
+	public ResponseEntity<?> getAllByUser(@RequestParam("userid") String userid){
+		return new ResponseEntity<>(doItBatchService.getAllByUser(userid), HttpStatus.OK);
 	}
 	
 	// 조회 : 1건
