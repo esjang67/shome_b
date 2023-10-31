@@ -26,7 +26,6 @@ public class BooksContoller {
 	// 등록
 	@PostMapping("/book")
 	public ResponseEntity<?> insert(@RequestBody Books book){
-		System.out.println("요청: " + book);
 		booksService.insert(book);
 		return new ResponseEntity<>("등록 성공", HttpStatus.OK);
 	}	
@@ -34,7 +33,6 @@ public class BooksContoller {
 	// 수정(이름, 삭제여부)
 	@PutMapping("/book")
 	public ResponseEntity<?> update(@RequestBody Books book){
-		System.out.println("요청: " + book);
 		booksService.update(book);
 		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
 	}
@@ -42,7 +40,6 @@ public class BooksContoller {
 	// 삭제(관리자용)
 	@DeleteMapping("/book/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id){
-		System.out.println("요청: delete id " + id);
 		booksService.delete(id);
 		return new ResponseEntity<>("삭제 성공", HttpStatus.OK);
 	}
@@ -56,7 +53,6 @@ public class BooksContoller {
 	// 조회 (전집id로 조회하는 list)
 	@GetMapping("/book/all")
 	public ResponseEntity<?> getListByColid(@RequestParam("colid")  int colid){
-		System.out.println("요청: list colid " + colid);
 		List<Books> list = booksService.getAllListByCollectid(colid);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}

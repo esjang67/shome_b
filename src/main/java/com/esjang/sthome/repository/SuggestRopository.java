@@ -16,7 +16,6 @@ public interface SuggestRopository extends JpaRepository<Suggest, Integer> {
 	// 조회(관리자) : 기간
 	public List<Suggest> findByBasedateBetweenOrderByIdDesc(LocalDate start, LocalDate end);
 	
-	
 	//	조회(사용자, 기간)
 	public List<Suggest> findByUserAndBasedateBetweenOrderByIdDesc(User user, LocalDate start, LocalDate end);
 	

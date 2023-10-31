@@ -24,7 +24,6 @@ public class ReportController {
 	// 등록
 	@PostMapping("/report")
 	public ResponseEntity<?> insert(@RequestBody Report report){
-		System.out.println("ReportController 요청: " + report);
 		reportService.insert(report);
 		return new ResponseEntity<>("등록 성공", HttpStatus.OK);
 	}	
@@ -32,7 +31,6 @@ public class ReportController {
 	// 수정
 	@PutMapping("/report")
 	public ResponseEntity<?> update(@RequestBody Report report){
-		System.out.println("요청: " + report);
 		reportService.update(report);
 		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
 	}
@@ -40,7 +38,6 @@ public class ReportController {
 	// 삭제(관리자용)
 	@DeleteMapping("/report/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id){
-		System.out.println("요청: delete id " + id);
 		reportService.delete(id);
 		return new ResponseEntity<>("삭제 성공", HttpStatus.OK);
 	}
@@ -49,7 +46,6 @@ public class ReportController {
 	@GetMapping("/report")
 	public ResponseEntity<?> get(@RequestParam("id") Integer id){
 		Report report = reportService.findById(id);
-		System.out.println("요청: " + report);
 		return new ResponseEntity<>(report, HttpStatus.OK);
 	}
 	

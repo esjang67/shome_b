@@ -26,7 +26,6 @@ public class ScheduleController {
 	// 등록
 	@PostMapping("/schedule")
 	public ResponseEntity<?> insert(@RequestBody Schedule schedule){
-		System.out.println("요청: " + schedule);
 		scheduleService.insert(schedule);
 		return new ResponseEntity<>("등록 성공", HttpStatus.OK);
 	}
@@ -34,7 +33,6 @@ public class ScheduleController {
 	// 수정
 	@PutMapping("/schedule")
 	public ResponseEntity<?> update(@RequestBody Schedule schedule){
-		System.out.println("요청: " + schedule);
 		scheduleService.update(schedule);
 		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
 	}
@@ -42,7 +40,6 @@ public class ScheduleController {
 	// 삭제
 	@DeleteMapping("/schedule/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id){
-		System.out.println("요청: delete id " + id);
 		scheduleService.delete(id);
 		return new ResponseEntity<>("삭제 성공", HttpStatus.OK);
 	}
@@ -50,7 +47,6 @@ public class ScheduleController {
 	// 조회 : 1건
 	@GetMapping("/schedule/{id}")
 	public ResponseEntity<?> get(@PathVariable Integer id){
-		System.out.println("=====================" + id);
 		Schedule schedule = scheduleService.findById(id);
 		return new ResponseEntity<>(schedule, HttpStatus.OK);
 	}
@@ -58,12 +54,6 @@ public class ScheduleController {
 	// 조회(관리자) : 기간
 	@GetMapping("/schedule/all")
 	public ResponseEntity<?> getList(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
-		System.out.println(startDate);
-//		// date format change
-//		Date stdate = DateCustom.longToDataCange(startDate);
-//		Date eddate = DateCustom.longToDataCange(endDate);
-//		System.out.println("schedule/all st " + stdate);
-//		System.out.println("schedule/all ed " + eddate);
 		List<Schedule> list = scheduleService.getAllByDateRange(startDate, endDate);
 		System.out.println(list);
 		return new ResponseEntity<>(list, HttpStatus.OK);

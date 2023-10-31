@@ -24,7 +24,6 @@ public class BookCollectController {
 	// 등록
 	@PostMapping("/collect")
 	public ResponseEntity<?> insert(@RequestBody BookCollect collect){
-		System.out.println("요청: " + collect);
 		bookColService.insert(collect);
 		return new ResponseEntity<>("등록 성공", HttpStatus.OK);
 	}	
@@ -32,7 +31,6 @@ public class BookCollectController {
 	// 수정(이름, 삭제여부)
 	@PutMapping("/collect")
 	public ResponseEntity<?> update(@RequestBody BookCollect collect){
-		System.out.println("요청: " + collect);
 		bookColService.update(collect);
 		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
 	}
@@ -40,7 +38,6 @@ public class BookCollectController {
 	// 삭제(관리자용)
 	@DeleteMapping("/collect/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id){
-		System.out.println("요청: delete id " + id);
 		bookColService.delete(id);
 		return new ResponseEntity<>("삭제 성공", HttpStatus.OK);
 	}
@@ -53,7 +50,6 @@ public class BookCollectController {
 	// 조회
 	@GetMapping("/collect")
 	public ResponseEntity<?> getCollect(@RequestParam("id") Integer id){
-		System.out.println("collect id " + id);
 		return new ResponseEntity<>(bookColService.getData(id), HttpStatus.OK);
 	}
 }

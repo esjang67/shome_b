@@ -32,17 +32,10 @@ public class User {
 	
 }
 
-//create table tbl_user(
-//userid varchar2(10) not null primary key,
-//grade varchar2(1) not null,
-//name varchar2(10) not null,
-//pw varchar2(5)
-//);
-//
-//insert into tbl_user values('DAD','P','아빠','1234');
-//insert into tbl_user values('MOM','P','엄마','1234');
-//insert into tbl_user values('MIN','K','민찬', '1234');
-//insert into tbl_user values('DO','K','도현', '1234');
+//insert into tbl_user(userid, grade, name, password) values('DAD','P','아빠','9876');
+//insert into tbl_user(userid, grade, name, password) values('MOM','P','엄마','9999');
+//insert into tbl_user(userid, grade, name, password) values('MIN','K','민찬', '0714');
+//insert into tbl_user(userid, grade, name, password) values('DO','K','도현', '0613');
 //commit;
 //
 //select * from tbl_user;

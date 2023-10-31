@@ -29,16 +29,12 @@ public class CouponController {
 	// 조회 : 기간 조회
 	@GetMapping("/coupon/all")
 	public ResponseEntity<?> getAllBasedate(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
-		
 		return new ResponseEntity<>(couponService.getAllByDateRange(startDate, endDate), HttpStatus.OK);
 	}
 	
 	// 조회 : 사용자별 기간 조회
 	@GetMapping("/coupon/all/user")
 	public ResponseEntity<?> getAllBasedateUser(@RequestParam("userid") String userid, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
-//		// date format change
-//		Date stdate = DateCustom.longToDataCange(startDate);
-//		Date eddate = DateCustom.longToDataCange(endDate);
 		return new ResponseEntity<>(couponService.getAllByUserDateRange(userid, startDate, endDate), HttpStatus.OK);
 	}
 	

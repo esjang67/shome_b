@@ -31,11 +31,4 @@ public class UserController {
 		return new ResponseEntity<>(loginUser, HttpStatus.OK);
 	}
 	
-//	http://localhost:8585/user/check	
-//	{
-//	    "userid": "MOM",
-//	    "pw": "1234"
-//	}	
-	
-	
 }
