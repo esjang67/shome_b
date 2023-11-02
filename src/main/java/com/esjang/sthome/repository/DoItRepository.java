@@ -25,7 +25,7 @@ public interface DoItRepository extends JpaRepository<DoIt, Integer> {
 	
 	public List<DoIt> findAllByUser(String userid);
 	
-	public void deleteByUserAndBasedate(String userid, LocalDate basedate);
+	public void deleteByUserAndBasedate(User user, LocalDate basedate);
 	
 //	@Query(value = "select * from tbl_doit where userid=:userid and basedate=:basedate")
 //	public List<DoIt> selfindAllByUserAndBasedate(@Param(value = "userid") String userid, 

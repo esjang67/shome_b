@@ -15,6 +15,7 @@ import com.esjang.sthome.domain.CouponType;
 import com.esjang.sthome.domain.DoIt;
 import com.esjang.sthome.domain.DoItBatch;
 import com.esjang.sthome.domain.User;
+import com.esjang.sthome.repository.CouponRepository;
 import com.esjang.sthome.repository.DoItBatchRepository;
 import com.esjang.sthome.repository.DoItRepository;
 import com.esjang.sthome.repository.UserRepository;
@@ -33,6 +34,12 @@ public class DoItService {
 	
 	@Autowired
 	private CouponService couponService;
+	
+	@Autowired
+	private CouponRepository couponRepository;
+	
+	@Autowired
+	private CouponTimeService couponTimeService;
 	
 	// 할일 조회(전체, 기준일자)
 	public List<DoIt> getAllByBasedate(String basedate){
@@ -124,10 +131,26 @@ public class DoItService {
 			couponService.insertCoupon(coupon);
 		}
 		
-	}	
-	// 삭제 : userid, basedate 전체 삭제
-	public void deleteToDayList(DoIt doit){
-		doItRepository.deleteByUserAndBasedate(doit.getUser().getUserid(), doit.getBasedate());
+	}
+	
+	// 삭제 : userid, basedate 전체 삭제 + 쿠폰발급되었다면 삭제해야함
+	@Transactional
+	public void deleteToDayList(String userid, String basedate){
+		User user = new User();
+		user = userRepository.findById(userid).get();
+		
+		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
+		LocalDate seldate = LocalDate.parse(basedate,f);
+		// doit 삭제
+		doItRepository.deleteByUserAndBasedate(user, seldate);
+		// 쿠폰발급 확인
+		int couponCnt = couponRepository.countByUserAndBasedateAndType(user, seldate, CouponType.ONEDAY);
+		// 쿠폰발급이 있다면 삭제
+		if(couponCnt > 0) {
+			couponRepository.deleteByUserAndBasedateAndType(user, seldate, CouponType.ONEDAY);
+			// 쿠폰타임 시간빼기
+			couponTimeService.updateSubTime(userid, 10);
+		}
 	}
 		
 	// String  basedate에서 요일 가져오기
