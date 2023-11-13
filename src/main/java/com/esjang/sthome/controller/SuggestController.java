@@ -32,11 +32,11 @@ public class SuggestController {
 	}
 	
 	// 수정 (type, content)
-	@PutMapping("/suggest")
-	public ResponseEntity<?> update(@RequestBody Suggest suggest){
-		suggestService.updateToTypeContent(suggest);
-		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
-	}
+//	@PutMapping("/suggest")
+//	public ResponseEntity<?> update(@RequestBody Suggest suggest){
+//		suggestService.updateToTypeContent(suggest);
+//		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
+//	}
 	
 	// 수정 (okflag) -> 일정추가할것!!!
 	@PutMapping("/suggest/ok/{id}")

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.esjang.sthome.domain.Report;
 import com.esjang.sthome.service.ReportService;
+import com.esjang.sthome.vo.ReportVo;
 
 @RestController
 public class ReportController {
@@ -23,14 +24,14 @@ public class ReportController {
 	
 	// 등록
 	@PostMapping("/report")
-	public ResponseEntity<?> insert(@RequestBody Report report){
+	public ResponseEntity<?> insert(@RequestBody ReportVo report){
 		reportService.insert(report);
 		return new ResponseEntity<>("등록 성공", HttpStatus.OK);
 	}	
 	
 	// 수정
 	@PutMapping("/report")
-	public ResponseEntity<?> update(@RequestBody Report report){
+	public ResponseEntity<?> update(@RequestBody ReportVo report){
 		reportService.update(report);
 		return new ResponseEntity<>("수정 성공", HttpStatus.OK);
 	}

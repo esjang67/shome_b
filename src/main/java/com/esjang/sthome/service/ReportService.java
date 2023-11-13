@@ -15,6 +15,8 @@ import com.esjang.sthome.domain.Report;
 import com.esjang.sthome.domain.User;
 import com.esjang.sthome.repository.BookRepository;
 import com.esjang.sthome.repository.ReportRepository;
+import com.esjang.sthome.repository.UserRepository;
+import com.esjang.sthome.vo.ReportVo;
 
 @Service
 public class ReportService {
@@ -28,31 +30,45 @@ public class ReportService {
 	@Autowired
 	private CouponService couponService;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
 	// 들록
 	@Transactional
-	public void insert(Report report) {
-		Integer id = report.getId();
+	public void insert(ReportVo resReport) {
+		User user = new User();
+		user = userRepository.findById(resReport.getUserid()).get();
+		
+		Books book = new Books();
+		book = bookRepository.findById(resReport.getBookid()).get();
+		
+		Report report = new Report();
+		report.setId(resReport.getId());
+		report.setBasedate(resReport.getBasedate());
+		report.setContent(resReport.getContent());
+		report.setUser(user);
+		report.setBook(book);
+		
 		reportRepository.save(report);
 
 		// 등록하면 coupon 추가
-		if(id == null) {
-			Books book = new Books();
-			book = bookRepository.findById(report.getBook().getId()).get();
+		if(resReport.getId() == null) {
 			Coupon coupon = new Coupon();
-			coupon.setBasedate(report.getBasedate());
+			coupon.setBasedate(resReport.getBasedate());
 			coupon.setContent("독후감 - " + book.getName());
 			coupon.setPlaytime(10);
 			coupon.setType(CouponType.BOOK);
-			coupon.setUser(report.getUser());
+			coupon.setUser(user);
 			
 			couponService.insertCoupon(coupon);
 		}
 		
 	}
 	// 수정
-	public void update(Report report) {
-		Report oriReport = reportRepository.findById(report.getId()).get();
-		oriReport.setContent(report.getContent());
+	public void update(ReportVo resReport) {
+		
+		Report oriReport = reportRepository.findById(resReport.getId()).get();
+		oriReport.setContent(resReport.getContent());
 		reportRepository.save(oriReport);
 	}
 	
@@ -73,8 +89,8 @@ public class ReportService {
 		User user = new User();
 		user.setUserid(userid);
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
-		LocalDate seldate = LocalDate.parse(selDate,f);
-		List<Report> list = reportRepository.findAllByUserAndBasedateOrderByIdDesc(user, seldate);
+		LocalDate sdate = LocalDate.parse(selDate,f);
+		List<Report> list = reportRepository.findAllByUserAndBasedateOrderByIdDesc(user, sdate);
 		return list;
 	}
 	

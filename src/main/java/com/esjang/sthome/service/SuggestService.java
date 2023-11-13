@@ -27,12 +27,12 @@ public class SuggestService {
 		suggestRopository.save(suggest);
 	}
 	// 수정 (type, content)
-	public void updateToTypeContent(Suggest suggest) {
-		Suggest oriSuggest = suggestRopository.findById(suggest.getId()).get();
-		oriSuggest.setType(suggest.getType());
-		oriSuggest.setContent(suggest.getContent());
-		suggestRopository.save(oriSuggest);
-	}
+//	public void updateToTypeContent(Suggest suggest) {
+//		Suggest oriSuggest = suggestRopository.findById(suggest.getId()).get();
+//		oriSuggest.setType(suggest.getType());
+//		oriSuggest.setContent(suggest.getContent());
+//		suggestRopository.save(oriSuggest);
+//	}
 	
 	// 수정 (okflag)
 	@Transactional
