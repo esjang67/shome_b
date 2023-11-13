@@ -105,10 +105,12 @@ public class ReportService {
 	
 	// 조회 사용자별 + 기간
 	public List<Report> findAllByUseridAndBasedate(String userid, String start, String end){
+		User user = new User();
+		user.setUserid(userid);
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		List<Report> list = reportRepository.findAllByUserAndBasedateBetweenOrderByIdDesc(userid, stdate, eddate);
+		List<Report> list = reportRepository.findAllByUserAndBasedateBetweenOrderByIdDesc(user, stdate, eddate);
 		return list;
 	}
 	

@@ -25,7 +25,7 @@ public interface ReportRepository extends JpaRepository<Report, Integer>{
 	public List<Report> findAllByUserAndBasedateOrderByIdDesc(User user, LocalDate seldate);
 	
 	// 조회 사용자별 + 기간
-	public List<Report> findAllByUserAndBasedateBetweenOrderByIdDesc(String userid, LocalDate start, LocalDate end);
+	public List<Report> findAllByUserAndBasedateBetweenOrderByIdDesc(User user, LocalDate start, LocalDate end);
 	
 	// 조회 사용자별
 	//public List<Report> findAllByUserOrderByIdDesc(String userid);
