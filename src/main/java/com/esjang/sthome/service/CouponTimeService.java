@@ -1,5 +1,6 @@
 package com.esjang.sthome.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import com.esjang.sthome.domain.CouponTime;
 import com.esjang.sthome.domain.User;
 import com.esjang.sthome.repository.CouponTimeRepository;
 import com.esjang.sthome.repository.UserRepository;
+import com.esjang.sthome.vo.CouponTimeVo;
 
 @Service
 public class CouponTimeService {
@@ -21,8 +23,20 @@ public class CouponTimeService {
 	
 	//---------------------------------------------------
 	// Time 조회
-	public List<CouponTime> getList(){
-		return timeRepository.findAll();
+	public List<CouponTimeVo> getList(){
+		
+		List<CouponTime> couponList = timeRepository.findAll();
+		
+		List<CouponTimeVo> times = new ArrayList<>();
+		for(CouponTime time : couponList) {
+			CouponTimeVo vo = new CouponTimeVo();
+			vo.setId(time.getId());
+			vo.setTotaltime(time.getTotaltime());
+			vo.setUserid(time.getUser().getUserid());
+			vo.setUsername(time.getUser().getName());
+			times.add(vo);
+		}
+		return times;	
 	}
 	
 	// 사용자별 총시간

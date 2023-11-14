@@ -4,6 +4,7 @@ package com.esjang.sthome.service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.esjang.sthome.repository.CouponRepository;
 import com.esjang.sthome.repository.DoItBatchRepository;
 import com.esjang.sthome.repository.DoItRepository;
 import com.esjang.sthome.repository.UserRepository;
+import com.esjang.sthome.vo.DoitVo;
 
 @Service
 public class DoItService {
@@ -42,18 +44,29 @@ public class DoItService {
 	private CouponTimeService couponTimeService;
 	
 	// 할일 조회(전체, 기준일자)
-	public List<DoIt> getAllByBasedate(String basedate){
+	public List<DoitVo> getAllByBasedate(String basedate){
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate seldate = LocalDate.parse(basedate,f);
 		List<DoIt> doitList = doItRepository.findListByBasedate(seldate);
 		
-		return doitList;
+		List<DoitVo> doits = new ArrayList<>();
+		for(DoIt doit : doitList) {
+			DoitVo vo = new DoitVo();
+			vo.setId(doit.getId());
+			vo.setBasedate(doit.getBasedate());
+			vo.setContent(doit.getContent());
+			vo.setDone(doit.getDone());
+			vo.setUserid(doit.getUser().getUserid());
+			vo.setUsername(doit.getUser().getName());
+			doits.add(vo);
+		}
+		return doits;
 	}
 	
 	// doit 리스트는 DoItBatch 에서 가져오므로 조회시 작업이 필요함
 	// 조회 : userid, basedate 전체 
 	@Transactional
-	public List<DoIt> getAllByUseridAndBasedate(String userid, String basedate){
+	public List<DoitVo> getAllByUseridAndBasedate(String userid, String basedate){
 		// 1 doit에 기준일자+사용자 로 저장된 리스트가 있는지 확인
 		User user = new User();
 		user.setUserid(userid);
@@ -78,8 +91,19 @@ public class DoItService {
 			
 			doitList = doItRepository.findListByUserAndBasedate(user, seldate);
 		}
-
-		return doitList;
+		
+		List<DoitVo> doits = new ArrayList<>();
+		for(DoIt doit : doitList) {
+			DoitVo vo = new DoitVo();
+			vo.setId(doit.getId());
+			vo.setBasedate(doit.getBasedate());
+			vo.setContent(doit.getContent());
+			vo.setDone(doit.getDone());
+			vo.setUserid(doit.getUser().getUserid());
+			vo.setUsername(doit.getUser().getName());
+			doits.add(vo);
+		}
+		return doits;
 	}
 	
 	// DoItBatch 에서 조회

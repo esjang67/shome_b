@@ -2,6 +2,7 @@ package com.esjang.sthome.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.esjang.sthome.domain.Schedule;
 import com.esjang.sthome.domain.Suggest;
 import com.esjang.sthome.domain.User;
 import com.esjang.sthome.repository.SuggestRopository;
+import com.esjang.sthome.vo.SuggestVo;
 
 @Service
 public class SuggestService {
@@ -57,45 +59,119 @@ public class SuggestService {
 	}
 	
 	// 조회 : 1건
-	public Suggest findById(Integer id){
+	public SuggestVo findById(Integer id){
 		Suggest suggest = suggestRopository.findById(id).orElseGet(()-> new Suggest());
-		System.out.println("SuggestService : findById " + id + " : " + suggest);
-		return suggest;
+		
+		SuggestVo vo = new SuggestVo();
+		vo.setId(suggest.getId());
+		vo.setBasedate(suggest.getBasedate());
+		vo.setType(suggest.getType());
+		vo.setContent(suggest.getContent());
+		vo.setOkflag(suggest.getOkflag());
+		vo.setUserid(suggest.getUser().getUserid());
+		vo.setUsername(suggest.getUser().getName());
+
+		return vo;	
 	}
 	
 	//	조회(기간)
-	public List<Suggest> getAllByBasedate(String start, String end){
+	public List<SuggestVo> getAllByBasedate(String start, String end){
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return suggestRopository.findByBasedateBetweenOrderByIdDesc(stdate, eddate);
+		
+		List<Suggest> suggestList = new ArrayList<>();
+		suggestList = suggestRopository.findByBasedateBetweenOrderByIdDesc(stdate, eddate);
+		
+		List<SuggestVo> suggests = new ArrayList<>();
+		for(Suggest suggest : suggestList) {
+			SuggestVo vo = new SuggestVo();
+			vo.setId(suggest.getId());
+			vo.setBasedate(suggest.getBasedate());
+			vo.setType(suggest.getType());
+			vo.setContent(suggest.getContent());
+			vo.setOkflag(suggest.getOkflag());
+			vo.setUserid(suggest.getUser().getUserid());
+			vo.setUsername(suggest.getUser().getName());
+			suggests.add(vo);
+		}
+		return suggests;		
+		
 	}
 	
 	//	조회(사용자, 기간)
-	public List<Suggest> getAllByUseridBasedate(String userid, String start, String end){
+	public List<SuggestVo> getAllByUseridBasedate(String userid, String start, String end){
 		User user = new User();
 		user.setUserid(userid);
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return suggestRopository.findByUserAndBasedateBetweenOrderByIdDesc(user, stdate, eddate);
+		
+		List<Suggest> suggestList = new ArrayList<>();
+		suggestList = suggestRopository.findByUserAndBasedateBetweenOrderByIdDesc(user, stdate, eddate);
+		
+		List<SuggestVo> suggests = new ArrayList<>();
+		for(Suggest suggest : suggestList) {
+			SuggestVo vo = new SuggestVo();
+			vo.setId(suggest.getId());
+			vo.setBasedate(suggest.getBasedate());
+			vo.setType(suggest.getType());
+			vo.setContent(suggest.getContent());
+			vo.setOkflag(suggest.getOkflag());
+			vo.setUserid(suggest.getUser().getUserid());
+			vo.setUsername(suggest.getUser().getName());
+			suggests.add(vo);
+		}
+		return suggests;	
 	}
 	
 	//	조회(사용자, 기간, OK)
-	public List<Suggest> getAllByUseridBasedateOK(String userid, String start, String end, String okflag){
+	public List<SuggestVo> getAllByUseridBasedateOK(String userid, String start, String end, String okflag){
 		User user = new User();
 		user.setUserid(userid);
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return suggestRopository.findByUserAndBasedateBetweenAndOkflagIsOrderByIdDesc(user, stdate, eddate, okflag);
+		
+		List<Suggest> suggestList = new ArrayList<>();
+		suggestList = suggestRopository.findByUserAndBasedateBetweenAndOkflagIsOrderByIdDesc(user, stdate, eddate, okflag);
+		
+		List<SuggestVo> suggests = new ArrayList<>();
+		for(Suggest suggest : suggestList) {
+			SuggestVo vo = new SuggestVo();
+			vo.setId(suggest.getId());
+			vo.setBasedate(suggest.getBasedate());
+			vo.setType(suggest.getType());
+			vo.setContent(suggest.getContent());
+			vo.setOkflag(suggest.getOkflag());
+			vo.setUserid(suggest.getUser().getUserid());
+			vo.setUsername(suggest.getUser().getName());
+			suggests.add(vo);
+		}
+		return suggests;	
 	}
 	//	조회(기간, OK)	
-	public List<Suggest> getAllByBasedateOK(String start, String end, String okflag){
+	public List<SuggestVo> getAllByBasedateOK(String start, String end, String okflag){
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		return suggestRopository.findByBasedateBetweenAndOkflagIsOrderByIdDesc(stdate, eddate, okflag);
+		
+		List<Suggest> suggestList = new ArrayList<>();
+		suggestList = suggestRopository.findByBasedateBetweenAndOkflagIsOrderByIdDesc(stdate, eddate, okflag);
+		
+		List<SuggestVo> suggests = new ArrayList<>();
+		for(Suggest suggest : suggestList) {
+			SuggestVo vo = new SuggestVo();
+			vo.setId(suggest.getId());
+			vo.setBasedate(suggest.getBasedate());
+			vo.setType(suggest.getType());
+			vo.setContent(suggest.getContent());
+			vo.setOkflag(suggest.getOkflag());
+			vo.setUserid(suggest.getUser().getUserid());
+			vo.setUsername(suggest.getUser().getName());
+			suggests.add(vo);
+		}
+		return suggests;
 	}
 	
 }

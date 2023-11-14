@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esjang.sthome.domain.Report;
 import com.esjang.sthome.service.ReportService;
 import com.esjang.sthome.vo.ReportVo;
 
@@ -46,8 +45,7 @@ public class ReportController {
 	// 조회 
 	@GetMapping("/report")
 	public ResponseEntity<?> get(@RequestParam("id") Integer id){
-		Report report = reportService.findById(id);
-		return new ResponseEntity<>(report, HttpStatus.OK);
+		return new ResponseEntity<>(reportService.findById(id), HttpStatus.OK);
 	}
 	
 	// 조회 : 사용자 + 기준일자

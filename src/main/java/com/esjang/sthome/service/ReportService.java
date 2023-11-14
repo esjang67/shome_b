@@ -2,6 +2,7 @@ package com.esjang.sthome.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,47 +78,95 @@ public class ReportService {
 		reportRepository.deleteById(id);
 	}
 	// 조회 1건
-	public Report findById(int id){
+	public ReportVo findById(int id){
 		Report report = reportRepository.findById(id).orElseGet(()-> new Report());
-		System.out.println("ReportService : findById " + id + " : " + report);
-		return report;
+		
+		ReportVo vo = new ReportVo();
+		vo.setId(report.getId());
+		vo.setBasedate(report.getBasedate());
+		vo.setContent(report.getContent());
+		vo.setBookid(report.getBook().getId());
+		vo.setBookname(report.getBook().getName());
+		vo.setUserid(report.getUser().getUserid());
+		vo.setUsername(report.getUser().getName());
+
+		return vo;	
 	}
 	
 	
 	// 조회 : 사용자 + 기준일자
-	public List<Report> findByUserToday(String userid, String selDate){
+	public List<ReportVo> findByUserToday(String userid, String selDate){
 		User user = new User();
 		user.setUserid(userid);
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate sdate = LocalDate.parse(selDate,f);
-		List<Report> list = reportRepository.findAllByUserAndBasedateOrderByIdDesc(user, sdate);
-		return list;
+		
+		List<Report> reportList = new ArrayList<>();
+		reportList = reportRepository.findAllByUserAndBasedateOrderByIdDesc(user, sdate);
+		
+		List<ReportVo> reports = new ArrayList<>();
+		for(Report report : reportList) {
+			ReportVo vo = new ReportVo();
+			vo.setId(report.getId());
+			vo.setBasedate(report.getBasedate());
+			vo.setContent(report.getContent());
+			vo.setBookid(report.getBook().getId());
+			vo.setBookname(report.getBook().getName());
+			vo.setUserid(report.getUser().getUserid());
+			vo.setUsername(report.getUser().getName());
+			reports.add(vo);
+		}
+		return reports;	
 	}
 	
 	// 조회 기간
-	public List<Report> findAllByBasedate(String start, String end){
+	public List<ReportVo> findAllByBasedate(String start, String end){
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		List<Report> list = reportRepository.findAllByBasedateBetweenOrderByIdDesc(stdate, eddate);
-		return list;
+		
+		List<Report> reportList = new ArrayList<>();
+		reportList = reportRepository.findAllByBasedateBetweenOrderByIdDesc(stdate, eddate);
+		
+		List<ReportVo> reports = new ArrayList<>();
+		for(Report report : reportList) {
+			ReportVo vo = new ReportVo();
+			vo.setId(report.getId());
+			vo.setBasedate(report.getBasedate());
+			vo.setContent(report.getContent());
+			vo.setBookid(report.getBook().getId());
+			vo.setBookname(report.getBook().getName());
+			vo.setUserid(report.getUser().getUserid());
+			vo.setUsername(report.getUser().getName());
+			reports.add(vo);
+		}
+		return reports;	
 	}
 	
 	// 조회 사용자별 + 기간
-	public List<Report> findAllByUseridAndBasedate(String userid, String start, String end){
+	public List<ReportVo> findAllByUseridAndBasedate(String userid, String start, String end){
 		User user = new User();
 		user.setUserid(userid);
 		DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
 		LocalDate stdate = LocalDate.parse(start,f);
 		LocalDate eddate = LocalDate.parse(end,f);
-		List<Report> list = reportRepository.findAllByUserAndBasedateBetweenOrderByIdDesc(user, stdate, eddate);
-		return list;
+		
+		List<Report> reportList = new ArrayList<>();
+		reportList = reportRepository.findAllByUserAndBasedateBetweenOrderByIdDesc(user, stdate, eddate);
+		
+		List<ReportVo> reports = new ArrayList<>();
+		for(Report report : reportList) {
+			ReportVo vo = new ReportVo();
+			vo.setId(report.getId());
+			vo.setBasedate(report.getBasedate());
+			vo.setContent(report.getContent());
+			vo.setBookid(report.getBook().getId());
+			vo.setBookname(report.getBook().getName());
+			vo.setUserid(report.getUser().getUserid());
+			vo.setUsername(report.getUser().getName());
+			reports.add(vo);
+		}
+		return reports;	
 	}
-	
-	// 조회 사용자별
-//	public List<Report> findAllByUserid(String userid){
-//		List<Report> list = reportRepository.findAllByUserOrderByIdDesc(userid);
-//		return list;
-//	}		
 	
 }

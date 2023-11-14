@@ -1,7 +1,6 @@
 package com.esjang.sthome.controller;
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,36 +54,31 @@ public class SuggestController {
 	// 조회 : 1건
 	@GetMapping("/suggest/{id}")
 	public ResponseEntity<?> get(@PathVariable Integer id){
-		Suggest suggest = suggestService.findById(id);
-		return new ResponseEntity<>(suggest, HttpStatus.OK);
+		return new ResponseEntity<>(suggestService.findById(id), HttpStatus.OK);
 	}
 	
 	// 조회(기간)
 	@GetMapping("/suggest/all")
 	public ResponseEntity<?> getListBasedate(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
-		List<Suggest> list = suggestService.getAllByBasedate(startDate, endDate);
-		return new ResponseEntity<>(list, HttpStatus.OK);
+		return new ResponseEntity<>(suggestService.getAllByBasedate(startDate, endDate), HttpStatus.OK);
 	}
 	
 	// 조회(사용자, 기간)
 	@GetMapping("/suggest/all/user")
 	public ResponseEntity<?> getListUseridBasedate(@RequestParam("userid") String userid, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
-		List<Suggest> list = suggestService.getAllByUseridBasedate(userid, startDate, endDate);
-		return new ResponseEntity<>(list, HttpStatus.OK);
+		return new ResponseEntity<>(suggestService.getAllByUseridBasedate(userid, startDate, endDate), HttpStatus.OK);
 	}
 	
 	// 조회(사용자, 기간, OK)
 	@GetMapping("/suggest/all/ok/user")
 	public ResponseEntity<?> getListUseridBasedateOK(@RequestParam("userid") String userid, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
-		List<Suggest> list = suggestService.getAllByUseridBasedateOK(userid, startDate, endDate, "Y");
-		return new ResponseEntity<>(list, HttpStatus.OK);
+		return new ResponseEntity<>(suggestService.getAllByUseridBasedateOK(userid, startDate, endDate, "Y"), HttpStatus.OK);
 	}
 	
 	// 조회(기간, OK)
 	@GetMapping("/suggest/all/ok")
 	public ResponseEntity<?> getListBasedateOK(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
-		List<Suggest> list = suggestService.getAllByBasedateOK(startDate, endDate, "Y");
-		return new ResponseEntity<>(list, HttpStatus.OK);
+		return new ResponseEntity<>(suggestService.getAllByBasedateOK(startDate, endDate, "Y"), HttpStatus.OK);
 	}
 	
 }

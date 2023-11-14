@@ -1,5 +1,6 @@
 package com.esjang.sthome.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import com.esjang.sthome.domain.DoItBatch;
 import com.esjang.sthome.domain.User;
 import com.esjang.sthome.repository.DoItBatchRepository;
 import com.esjang.sthome.repository.UserRepository;
+import com.esjang.sthome.vo.DoitBatchVo;
 
 @Service
 public class DoItBatchService {
@@ -20,20 +22,57 @@ public class DoItBatchService {
 	private UserRepository userRepository;
 	
 	// 조회 : 전체(관리자용)
-	public List<DoItBatch> getAll(){
-		return doItBatchRepository.findAll();
+	public List<DoitBatchVo> getAll(){
+		List<DoItBatch> batchList = new ArrayList<>();
+		batchList = doItBatchRepository.findAll();
+		
+		List<DoitBatchVo> batchs = new ArrayList<>();
+		for(DoItBatch batch : batchList) {
+			DoitBatchVo vo = new DoitBatchVo();
+			vo.setId(batch.getId());
+			vo.setDefineday(batch.getDefineday());
+			vo.setContent(batch.getContent());
+			vo.setUserid(batch.getUser().getUserid());
+			vo.setUsername(batch.getUser().getName());
+			batchs.add(vo);
+		}
+		return batchs;		
+		 
 	}	 
 	
 	// 조회 : 전체(관리자용)
-	public List<DoItBatch> getAllByUser(String userid){
+	public List<DoitBatchVo> getAllByUser(String userid){
 		User user = new User();
 		user = userRepository.findById(userid).get();
-		return doItBatchRepository.findAllListByUser(user);
+		
+		List<DoItBatch> batchList = new ArrayList<>();
+		batchList = doItBatchRepository.findAllListByUser(user);
+		
+		List<DoitBatchVo> batchs = new ArrayList<>();
+		for(DoItBatch batch : batchList) {
+			DoitBatchVo vo = new DoitBatchVo();
+			vo.setId(batch.getId());
+			vo.setDefineday(batch.getDefineday());
+			vo.setContent(batch.getContent());
+			vo.setUserid(batch.getUser().getUserid());
+			vo.setUsername(batch.getUser().getName());
+			batchs.add(vo);
+		}
+		return batchs;		
 	}	 
 	
 	// 조회 : 1건
-	public DoItBatch get(Integer id) {
-		return doItBatchRepository.findById(id).get();
+	public DoitBatchVo get(Integer id) {
+		DoItBatch batch = doItBatchRepository.findById(id).get();
+		
+		DoitBatchVo vo = new DoitBatchVo();
+		vo.setId(batch.getId());
+		vo.setDefineday(batch.getDefineday());
+		vo.setContent(batch.getContent());
+		vo.setUserid(batch.getUser().getUserid());
+		vo.setUsername(batch.getUser().getName());
+		
+		return vo;		
 	}
 	
 	// 등록
