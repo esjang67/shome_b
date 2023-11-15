@@ -18,7 +18,7 @@ LOMBOK, ORACLE, JPA
 
 ### DataBase 
   
-  Oracle Database 11g Express Edition 
+  Oracle Database 11g Express Edition -> PostgreSQL로 변경
 
 ---
 
