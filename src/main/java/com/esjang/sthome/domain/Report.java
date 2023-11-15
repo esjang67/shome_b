@@ -48,7 +48,7 @@ public class Report {
 	private Books book;
 	
 //	@Lob  // Postgres는 안됨
-	@Column(nullable = false, columnDefinition="TEXT")
+	@Column(nullable = false, length = 50000)
 	private String content;
 	
 }
