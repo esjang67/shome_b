@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -48,8 +47,8 @@ public class Report {
 	@JoinColumn(name = "bookid", referencedColumnName = "id")
 	private Books book;
 	
-	@Lob
-	@Column(nullable = false)
+//	@Lob  // Postgres는 안됨
+	@Column(nullable = false, columnDefinition="TEXT")
 	private String content;
 	
 }
