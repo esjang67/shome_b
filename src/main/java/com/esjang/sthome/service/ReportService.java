@@ -34,6 +34,9 @@ public class ReportService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private CouponTimeService timeService;
+	
 	// 들록
 	@Transactional
 	public void insert(ReportVo resReport) {
@@ -75,7 +78,14 @@ public class ReportService {
 	
 	// 삭제(관리자용)
 	public void delete(int id) {
+		User user = new User();
+		Report report = reportRepository.findById(id).get();
+		user = report.getUser();
+		
 		reportRepository.deleteById(id);
+		
+		// 쿠폰삭제		
+		timeService.updateSubTime(user.getUserid(), 10);
 	}
 	// 조회 1건
 	public ReportVo findById(int id){

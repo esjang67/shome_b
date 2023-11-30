@@ -51,4 +51,11 @@ public class Coupon {
 	
 	private Integer playtime;
 	
+//	// 쿠폰 사용여부 20231130 임시추가)
+//	@Column(columnDefinition = "varchar(1) default 'N'")
+//	private String use;
+//	
+//	// 쿠폰 발행 id(type으로 report인지 다른것인지 확인할 수 있음)
+//	private Integer impid;
+	
 }
